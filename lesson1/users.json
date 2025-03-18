@@ -1,0 +1,20 @@
+[
+  {
+    "id": "325315",
+    "name": "sari",
+    "type": "drama",
+    "borrowed": "no"
+  },
+  {
+    "id": "156976",
+    "name": "ruth",
+    "type": "emotion",
+    "borrowed": "yes"
+  },
+  {
+    "id": "965472",
+    "name": "dina",
+    "type": "drama",
+    "borrowed": "no"
+  }
+]

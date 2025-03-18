@@ -1,3 +1,6 @@
+const fs=require('fs')
+const {resolve}=require('path')
+const path='./users.json'
 class User{
     id;
     name;
@@ -14,30 +17,56 @@ class User{
         return `id:${this.id},name:${this.name},type:${this.type},borrowed:${this.borrowed}`;
     }
 }
-let arr=[new User('325315','sari','drama','no'),
+
+let arr=[
+    new User('325315','sari','drama','no'),
     new User('156976','ruth','emotion','yes'),
     new User('965472','dina','drama','no')
 ]
-function print(...arr){
-    for(let i=0;i<arr.length;i++)
-    {
-        console.log(arr[i].toString());
+
+function initUsers() {
+    try {
+        const data = JSON.stringify(arr, null, 2)
+        fs.writeFileSync(path, data, 'utf8')
+        console.log("users data success!")
+    } catch (err) {
+        console.log("users data error!")
     }
 }
-function getUser(kod)
+
+function readUsers() {
+    return new Promise((resolve,reject)=>{
+        fs.readFile(path, 'utf8', (err, data) => {
+            if (err) {
+                return reject(err)
+            }
+            const users = JSON.parse(data)
+            resolve(users)
+        })
+    })
+}
+
+function print(callback){
+    readUsers().then((users)=>{
+        for(const u of users)
+            console.log(JSON.stringify(u,null,2))
+    })
+    .catch((err)=>console.log(err))
+}
+function getUser(id)
 {
-    try {
-        const users = arr.filter(x => x.id == kod);
-        if (users.length === 0) {
-            throw new Error("not found");
-        }
-        return users;
-    } 
-    catch (error) {
-        console.log(error.message);  // זורק את השגיאה שנמצאה
-    }
+    return new Promise((resolve,reject)=>{
+        readUsers().then((users)=>{
+            const user = users.find(u => u.id == id)
+            if (!user) {
+                return reject(new Error(`user with code ${id} not found! `))
+            }
+            resolve(user)
+        })
+        .catch((err)=>reject(err))
+    })
 }
 /*print(arr);
 print(getUser('325315'));
 print(getUser(5));*/
-module.exports = {getUser,printUser:print,User};
+module.exports = {getUser,printUser:print,User,initUsers};

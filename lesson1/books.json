@@ -1,0 +1,20 @@
+[
+  {
+    "id": 0,
+    "name": "dina dey",
+    "type": "children",
+    "borrowed": "no"
+  },
+  {
+    "id": 1,
+    "name": "blue blood",
+    "type": "drama",
+    "borrowed": "no"
+  },
+  {
+    "id": 2,
+    "name": "what is true true",
+    "type": "emotion",
+    "borrowed": "yes"
+  }
+]
